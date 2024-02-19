@@ -1,4 +1,4 @@
-⚠️ This project is a part of an academical project and hence isn't open to contribution until its finished
+⚠️ This project is a part of an academical project and hence isn't open to contributions until it is finished
 
 # Alignment Social Robots
 
