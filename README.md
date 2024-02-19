@@ -1,5 +1,7 @@
 # Alignment Social Robots
 
+<img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*EnedQNSHpTl3pEdHqgyCOg.jpeg" width="400">
+
 ## Overview
 Our project explores how humans and an anthropomorphic​ robot, powered by a sophisticated Large Language Model​ (LLM), achieve alignment in conversations.
 
