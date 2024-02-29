@@ -5,11 +5,19 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://s3-eu-west-1.amazonaws.com/furhat-maven/releases")
+    }
+    maven {
+        url = uri("https://repo.gradle.org/gradle/libs-releases")
+    }
 }
 
 dependencies {
     // Add any Kotlin or other dependencies here, e.g.,
-    implementation(kotlin("stdlib")) 
+    implementation(kotlin("stdlib"))
+    implementation("com.furhatrobotics.furhatos:furhat-commons:2.7.0")
+    implementation("com.theokanning.openai-gpt3-java:client:0.12.0")
 }
 
 java {
@@ -19,5 +27,5 @@ java {
 }
 
 application {
-    mainClass.set("furhat.client.MainKt") 
+    mainClass.set("furhatos.app.openaichat.MainKt") 
 }
