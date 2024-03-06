@@ -19,7 +19,7 @@ This project was made by:
 - [Jeff Sherer](https://github.com/JeffSherer)
 - [Marc Puig Arocas](https://github.com/marc-1212)
 - [Maximilien Bildstein](https://github.com/maxblt)
-- Mizan Haque
+- [Mizan Haque](https://github.com/zan-h)
 - [Prudhvi Venkata Sai Paleti](https://github.com/sannmeta)
 - [Robbie McPherson](https://github.com/RobbieMcP)
 - [Sattwik Mohanty](https://github.com/SattwikM)
