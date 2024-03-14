@@ -11,6 +11,9 @@ To measure the alignment, we will be running experiments of human-robot interact
 
 You'll find here the implementation of the Furhat client that will make the connection between the Furhat robot and the LLM API.
 
+## Quickstart
+To run the furhat client please follow the instruction of the [quickstart documentation](./quickstart.md).
+
 ## Our Team
 This project was made by:
 - [Aswin Shaji](https://github.com/devAswinCode)
