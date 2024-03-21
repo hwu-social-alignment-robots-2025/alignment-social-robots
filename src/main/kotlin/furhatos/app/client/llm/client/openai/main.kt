@@ -1,35 +1,26 @@
-package furhatos.app.openaichat.flow.llm.chatbot.openai
+package furhatos.app.client.llm.client.openai
 
-import furhatos.app.openaichat.flow.llm.chatbot.Chatbot
 import com.theokanning.openai.OpenAiService
 import com.theokanning.openai.completion.CompletionRequest
-import furhatos.flow.kotlin.DialogHistory
-import furhatos.flow.kotlin.Furhat
+import furhatos.app.client.llm.client.LLMClient
+import furhatos.app.client.config.GPTConfig
+import furhatos.app.client.config.PromptEngineeringConfig
+import furhatos.app.client.prompt.engineering.loadPromptEngineeringFromConfig
 
-class OpenAIChatbot(serviceKey: String) : Chatbot {
-    val service = OpenAiService(serviceKey)
+class GPTClient(config: GPTConfig, promptEngineeringConfig: PromptEngineeringConfig) : LLMClient {
+    val service = OpenAiService(config.apiKey)
 
     // Read more about these settings: https://beta.openai.com/docs/introduction
+    var model = config.model
     var temperature = 0.9 // Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
     var maxTokens = 50 // Length of output generated. 1 token is on average ~4 characters or 0.75 words for English text
     var topP = 1.0 // 1.0 is default. An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
     var frequencyPenalty = 0.0 // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
     var presencePenalty = 0.6 // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+    var promptEngineering = loadPromptEngineeringFromConfig(promptEngineeringConfig)
 
     override fun prompt(): String {
-        /** The prompt for the chatbot includes a context of ten "lines" of dialogue. **/
-        val history = Furhat.dialogHistory.all.takeLast(10).mapNotNull {
-            when (it) {
-                is DialogHistory.ResponseItem -> {
-                    "User: ${it.response.text}"
-                }
-                is DialogHistory.UtteranceItem -> {
-                    "Agent: ${it.toText()}"
-                }
-                else -> null
-            }
-        }.joinToString(separator = "\n")
-        val prompt = "Respond as Agent\n\n$history\nAgent:"
+        val prompt = promptEngineering.formatPrompt()
 
         val completionRequest = CompletionRequest.builder()
             .temperature(temperature)
@@ -40,9 +31,9 @@ class OpenAIChatbot(serviceKey: String) : Chatbot {
             .prompt(prompt)
             .stop(listOf("User:"))
             .echo(false)
-            .model("gpt-3.5-turbo-instruct")
+            .model(model)
             .build();
-        
+
         try {
             val completion = service.createCompletion(completionRequest)
             val response = completion.getChoices().first().text.trim()
@@ -55,5 +46,4 @@ class OpenAIChatbot(serviceKey: String) : Chatbot {
         // Return default error response
         return "I've failed to get my generated response from the OpenAI API"
     }
-
 }

@@ -1,8 +1,6 @@
-package furhatos.app.openaichat.flow
+package furhatos.app.client.flow
 
-import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
-import furhatos.records.Location
 
 val Idle : State = state {
     onEntry {

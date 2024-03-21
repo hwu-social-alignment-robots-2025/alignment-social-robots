@@ -1,8 +1,7 @@
-package furhatos.app.openaichat.flow
+package furhatos.app.client.flow
 
 import furhatos.flow.kotlin.*
 import furhatos.gestures.ARKitParams
-import furhatos.gestures.BasicParams
 import furhatos.gestures.defineGesture
 import kotlin.random.Random
 

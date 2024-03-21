@@ -36,16 +36,21 @@ compileTestKotlin {
 }
 
 repositories {
+    mavenCentral()
     mavenLocal()
     maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
-    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+    maven { url "https://repo.gradle.org/gradle/libs-releases" }
     jcenter()
 }
 
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.7.0'
-    implementation 'com.theokanning.openai-gpt3-java:client:0.12.0'
+    implementation group: 'com.furhatrobotics.furhatos', name: 'furhat-commons', version: '2.7.0'
+    implementation group: 'com.theokanning.openai-gpt3-java', name: 'client', version: '0.12.0'
+    implementation group: 'io.ktor', name: 'ktor-client-core-jvm', version: '2.3.7'
+    implementation group: 'io.ktor', name: 'ktor-client-okhttp', version: '3.0.0-beta-1'
+    implementation group: 'com.sksamuel.hoplite', name: 'hoplite-core', version: '1.4.16'
+    implementation group: 'com.sksamuel.hoplite', name: 'hoplite-yaml', version: '1.4.16'
 }
 
 jar {

@@ -1,8 +1,7 @@
-package furhatos.app.openaichat.flow
+package furhatos.app.client.flow
 
-import furhatos.app.openaichat.flow.llm.chatbot.openai.OpenAIChatbot
-import furhatos.app.openaichat.setting.distanceToEngage
-import furhatos.app.openaichat.setting.maxNumberOfUsers
+import furhatos.app.client.setting.distanceToEngage
+import furhatos.app.client.setting.maxNumberOfUsers
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
