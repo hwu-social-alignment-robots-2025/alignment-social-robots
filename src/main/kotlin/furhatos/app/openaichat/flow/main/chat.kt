@@ -1,10 +1,7 @@
 package furhatos.app.openaichat.flow
 
-import furhatos.app.openaichat.flow.*
-import furhatos.flow.kotlin.*
-import furhatos.nlu.common.No
-import furhatos.nlu.common.Yes
 import furhatos.app.openaichat.flow.llm.chatbot.openai.OpenAIChatbot
+import furhatos.flow.kotlin.*
 
 val Chat = state(Parent) {
     onEntry {
@@ -25,6 +22,7 @@ val Chat = state(Parent) {
     }
 
     onResponse {
+        
         // Retrieve API Key from environment variables
         val apiKey: String = System.getenv("API_KEY") ?: ""
         /** Check API key for the OpenAI GPT3 language model has been set */
@@ -39,6 +37,8 @@ val Chat = state(Parent) {
         val response = call {
             chatbot.prompt()
         } as String
+        chatbot.addAgentMsg(response)
+        chatbot.addContext()
         furhat.say(response)
         reentry()
     }
