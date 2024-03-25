@@ -3,5 +3,5 @@ furhat:
   address: 192.168.1.107
   interactions:
     maxNumberOfUsers: 2
-    distanceToEngage: 1.0
+    distanceToEngage: 1.5
     listenEndSil: 800

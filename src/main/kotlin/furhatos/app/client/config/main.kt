@@ -50,8 +50,8 @@ data class PersonaConfig(val name: String, val traits: String, val synonyms: Lis
 data class RefineConfig(val chainOfThought: String)
 
 // The subconfig that describe the context in which the persona will interact
-data class ContextConfig(val task: String, val ranking: RankingConfig)
+data class ContextConfig(val task: String, val rankings: List<RankingConfig>)
 
 
 // The subconfig that describe the persona ranking
-data class RankingConfig(val theme: String, val elements: List<String>)
+data class RankingConfig(val theme: String, val elements: List<String>, val shuffled: Boolean)

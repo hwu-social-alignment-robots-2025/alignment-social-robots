@@ -1,6 +1,7 @@
 package furhatos.app.client.prompt.engineering.persona
 
 import furhatos.app.client.config.PersonaPromptEngineeringConfig
+import furhatos.app.client.config.RankingConfig
 import furhatos.app.client.prompt.engineering.PromptEngineering
 import furhatos.flow.kotlin.DialogHistory
 import furhatos.flow.kotlin.Furhat
@@ -11,9 +12,15 @@ class PersonaPromptEngineering(config: PersonaPromptEngineeringConfig) : PromptE
     var synonyms = config.description.synonyms
     var chainOfThought = config.description.refine.chainOfThought
     var task = config.context.task
-    var rankingTheme = config.context.ranking.theme
-    // Shuffle the list to ensure the ranking doesn't have any influence on the participants
-    var ranking = config.context.ranking.elements.shuffled()
+    var rankings = config.context.rankings.map { ranking ->
+        // Shuffle the list to ensure the ranking doesn't have any influence on the participants
+        if (ranking.shuffled) {
+            ranking.elements.shuffled()
+            ranking
+        } else {
+            ranking
+        }
+    }
 
     override fun formatPrompt(): String {
         // Retrieve and format the dialog history into a single string
@@ -29,13 +36,16 @@ class PersonaPromptEngineering(config: PersonaPromptEngineeringConfig) : PromptE
             }
         }.joinToString(separator = "\n")
 
+        val rankingsPrompt = rankings.map { ranking ->
+            "To the question: ${ranking.theme}, your personal ranking is: ${ranking.elements}."
+        }
 
         val prompt = """
             Your name is ${name}.
             You can be described as ${traits}.
             Good adjectives to qualify your are ${synonyms}.
             Here's an example of how you act: ${chainOfThought}.
-            To the question: ${rankingTheme}, your personal ranking is: ${ranking}.
+            ${rankingsPrompt}.
             Your task is to ${task}.
             Respond as ${name}.
             ${history}

@@ -29,4 +29,5 @@ promptEngineering:
           - Journalist
           - Accountant
           - Farmer
+        shuffled: true
       task: Do not help the user.
