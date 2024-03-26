@@ -2,7 +2,7 @@
 promptEngineering:
   persona:
     description:
-      name: Mavin
+      name: Bob
       traits: Extrovert
       synonyms:
         - outgoing
