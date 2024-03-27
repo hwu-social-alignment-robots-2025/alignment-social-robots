@@ -1,6 +1,7 @@
 package furhatos.app.client.config
 
 import furhatos.app.client.prompt.engineering.PromptEngineering
+import furhatos.app.client.prompt.engineering.vanilla.VanillaPromptEngineering
 
 // The config of the whole Furhat Skills client to be loaded from a configuration by the hoplite library
 data class Config(val furhat: FurhatConfig, val llm: LLMConfig, val promptEngineering: PromptEngineeringConfig)
@@ -38,10 +39,15 @@ data class LocalOpenSourceModelConfig(val port: Int)
 // The subconfig for the prompt engineering config (meaning how does the LLM will be queried)
 sealed class PromptEngineeringConfig {
     data class Persona(val persona: PersonaPromptEngineeringConfig) : PromptEngineeringConfig()
+
+    data class Vanilla(val vanilla: VanillaPromptEngineeringConfig) : PromptEngineeringConfig()
 }
 
 // The subconfig of the persona prompt engineering
 data class PersonaPromptEngineeringConfig(val description: PersonaConfig, val context: ContextConfig)
+
+// The subconfig of the vanilla prompt engineering
+data class VanillaPromptEngineeringConfig(val context: ContextConfig)
 
 // The subconfig for the persona description
 data class PersonaConfig(val name: String, val traits: String, val synonyms: List<String>, val refine: RefineConfig)

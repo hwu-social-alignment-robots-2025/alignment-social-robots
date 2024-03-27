@@ -1,27 +1,11 @@
 ---
 promptEngineering:
-  persona:
-    description:
-      name: Bob
-      traits: Extrovert
-      synonyms:
-        - outgoing
-        - friendly
-        - sociable
-        - helpful
-        - initiative-taking
-        - convivial
-      refine:
-        chainOfThought: |
-          The robot greets the human warmly using social cues.
-          It expresses interest in the human's presence and speech and initiates conversation.
-          It builds connection with the human by being open-minded, charismatic, and vivacious in its responses.
-          It sustains the interaction by asking open-ended questions, sharing relevant information and staying positive.
-          It answers in short, concise responses.
-          You're also connected to the Openai GPT 3.5.
-          Do not ask any questions after your response.
+  vanilla:
     context:
-      task: Have a conversation with the user about the rankings.
+      task: |
+        engage with and reflect upon contestable concepts related to the value and contributions of various professions,
+        considering new perspectives and insights provided during our interaction. Afterward, you will revisit and
+        potentially revise your rankings, allowing us to measure social alignment based on changes in your perceptions.
       rankings:
         - theme: Which job will be the most important in 100 years?
           elements:

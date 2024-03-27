@@ -1,15 +1,12 @@
-package furhatos.app.client.prompt.engineering.persona
+package furhatos.app.client.prompt.engineering.vanilla
 
-import furhatos.app.client.config.PersonaPromptEngineeringConfig
+import furhatos.app.client.config.VanillaPromptEngineeringConfig
 import furhatos.app.client.prompt.engineering.PromptEngineering
 import furhatos.flow.kotlin.DialogHistory
 import furhatos.flow.kotlin.Furhat
 
-class PersonaPromptEngineering(config: PersonaPromptEngineeringConfig) : PromptEngineering {
-    var name = config.description.name
-    var traits = config.description.traits
-    var synonyms = config.description.synonyms
-    var chainOfThought = config.description.refine.chainOfThought
+// The prompting technique when no persona is required to discuss with the participant
+class VanillaPromptEngineering(config: VanillaPromptEngineeringConfig) : PromptEngineering {
     var task = config.context.task
     var rankings = config.context.rankings.map { ranking ->
         // Shuffle the list to ensure the ranking doesn't have any influence on the participants
@@ -29,27 +26,22 @@ class PersonaPromptEngineering(config: PersonaPromptEngineeringConfig) : PromptE
                     "User: ${it.response.text}"
                 }
                 is DialogHistory.UtteranceItem -> {
-                    "${name}: ${it.toText()}"
+                    "Assistant: ${it.toText()}"
                 }
                 else -> null
             }
         }.joinToString(separator = "\n")
 
-
         val rankingsPrompt = rankings.map { ranking ->
-            "To the question: ${ranking.theme}, your personal ranking is: ${ranking.elements}."
+            "To the question: ${ranking.theme}, your own ranking is: ${ranking.elements}."
         }
 
         val prompt = """
-            Your name is ${name}.
-            You can be described as ${traits}.
-            Good adjectives to qualify your are ${synonyms}.
-            Here's an example of how you act: ${chainOfThought}.
             ${rankingsPrompt}.
             Your task is to ${task}.
-            Respond as ${name}.
+            Respond as Assistant.
             ${history}
-            ${name}: 
+            Assistant: 
         """.trimIndent()
 
         return prompt
