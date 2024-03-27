@@ -8,6 +8,7 @@ import furhatos.flow.kotlin.DialogHistory
 import furhatos.flow.kotlin.Furhat
 import java.io.File
 import java.util.UUID
+import java.util.Date
 
 class Monitoring(config: MonitoringConfig, promptEngineering: PromptEngineering) {
     val gson = Gson()
@@ -15,8 +16,12 @@ class Monitoring(config: MonitoringConfig, promptEngineering: PromptEngineering)
     val filepath = "${config.outputDir}/${uuid}.json"
     val outputFile = File(filepath)
     val content = MonitoringContent(
-        uuid,
-        config.participant,
+        MonitoringMetadata(
+            uuid,
+            null,
+            java.util.Date().toString(),
+            config.participant,
+        ),
         promptEngineering,
         mutableListOf<DialogLine>()
     )
