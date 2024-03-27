@@ -60,3 +60,4 @@ kotlin-ide/
 .kotlin/
 .teamcity/
 .envrc
+./output/*
