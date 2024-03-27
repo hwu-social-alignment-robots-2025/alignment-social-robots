@@ -16,7 +16,7 @@ val Chat = state(Parent) {
         furhat.listen(endSil = config?.furhat?.interactions?.listenEndSil!!)
     }
 
-    onResponse("can we stop", "goodbye", "I think we're done") {
+    onResponse("goodbye") {
         monitoring?.updateDialog()
         furhat.say("Okay, goodbye")
         monitoring?.updateDialog()
