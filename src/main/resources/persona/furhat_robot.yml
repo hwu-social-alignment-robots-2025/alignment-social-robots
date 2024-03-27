@@ -1,7 +1,0 @@
----
-furhat:
-  address: localhost
-  interactions:
-    maxNumberOfUsers: 2
-    distanceToEngage: 1.5
-    listenEndSil: 800

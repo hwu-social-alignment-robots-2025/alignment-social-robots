@@ -1,0 +1,5 @@
+---
+monitoring:
+  outputDir: "./output/"
+  participant:
+    hwuId: ""

@@ -1,8 +1,9 @@
 package furhatos.app.client.flow
 
-import furhatos.app.client.furhatConfig
 import furhatos.flow.kotlin.*
 import furhatos.app.client.llmClient
+import furhatos.app.client.config
+import furhatos.app.client.monitoring
 
 val Chat = state(Parent) {
     onEntry {
@@ -12,20 +13,24 @@ val Chat = state(Parent) {
     }
 
     onReentry {
-        furhat.listen(endSil = furhatConfig.interactions.listenEndSil)
+        furhat.listen(endSil = config?.furhat?.interactions?.listenEndSil!!)
     }
 
     onResponse("can we stop", "goodbye", "I think we're done") {
+        monitoring?.updateDialog()
         furhat.say("Okay, goodbye")
+        monitoring?.updateDialog()
         goto(Idle)
     }
 
     onResponse {
         furhat.gesture(GazeAversion(2.0))
+        monitoring?.updateDialog()
 
-        val response = llmClient.prompt()
-        furhat.say(response)
+        val response = llmClient?.prompt()
+        furhat.say(response!!)
 
+        monitoring?.updateDialog()
         reentry()
     }
 

@@ -4,7 +4,7 @@ import furhatos.app.client.prompt.engineering.PromptEngineering
 import furhatos.app.client.prompt.engineering.vanilla.VanillaPromptEngineering
 
 // The config of the whole Furhat Skills client to be loaded from a configuration by the hoplite library
-data class Config(val furhat: FurhatConfig, val llm: LLMConfig, val promptEngineering: PromptEngineeringConfig)
+data class Config(val furhat: FurhatConfig, val llm: LLMConfig, val promptEngineering: PromptEngineeringConfig, val monitoring: MonitoringConfig)
 
 // The subconfig for settings related to the Furhat robot exclusively (either it be the SDK or the actual robot)
 data class FurhatConfig(val address: String, val interactions: FurhatInteractionsConfig)
@@ -61,3 +61,10 @@ data class ContextConfig(val task: String, val rankings: List<RankingConfig>)
 
 // The subconfig that describe the persona ranking
 data class RankingConfig(val theme: String, val elements: List<String>, val shuffled: Boolean)
+
+// The subconfig that describe the monitoring configuration
+data class MonitoringConfig(val outputDir: String, val participant: ParticipantInformation)
+
+// The subconfig that describe the participant information (it will just be used to merge with the gathered data from
+// the pre and post experiment forms)
+data class ParticipantInformation(val hwuId: String)

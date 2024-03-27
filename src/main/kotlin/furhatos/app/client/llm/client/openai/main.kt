@@ -4,10 +4,10 @@ import com.theokanning.openai.OpenAiService
 import com.theokanning.openai.completion.CompletionRequest
 import furhatos.app.client.llm.client.LLMClient
 import furhatos.app.client.config.GPTConfig
-import furhatos.app.client.config.PromptEngineeringConfig
-import furhatos.app.client.prompt.engineering.loadPromptEngineeringFromConfig
+import furhatos.app.client.prompt.engineering.PromptEngineering
+import furhatos.app.client.promptEngineering
 
-class GPTClient(config: GPTConfig, promptEngineeringConfig: PromptEngineeringConfig) : LLMClient {
+class GPTClient(config: GPTConfig, promptEngineering: PromptEngineering) : LLMClient {
     val service = OpenAiService(config.apiKey)
 
     // Read more about these settings: https://beta.openai.com/docs/introduction
@@ -17,10 +17,9 @@ class GPTClient(config: GPTConfig, promptEngineeringConfig: PromptEngineeringCon
     var topP = 1.0 // 1.0 is default. An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
     var frequencyPenalty = 0.0 // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
     var presencePenalty = 0.6 // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
-    var promptEngineering = loadPromptEngineeringFromConfig(promptEngineeringConfig)
 
     override fun prompt(): String {
-        val prompt = promptEngineering.formatPrompt()
+        val prompt = promptEngineering?.formatPrompt()
 
         val completionRequest = CompletionRequest.builder()
             .temperature(temperature)

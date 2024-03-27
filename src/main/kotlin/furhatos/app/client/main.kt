@@ -7,20 +7,16 @@ import furhatos.nlu.LogisticMultiIntentClassifier
 import com.sksamuel.hoplite.ConfigLoader
 import com.sksamuel.hoplite.PropertySource
 import furhatos.app.client.config.Config
-import furhatos.app.client.config.FurhatConfig
-import furhatos.app.client.config.FurhatInteractionsConfig
-import furhatos.app.client.llm.client.none.NoLLMClient
 import furhatos.app.client.llm.client.LLMClient
 import furhatos.app.client.llm.client.loadLLMClientFromConfig
+import furhatos.app.client.monitoring.Monitoring
+import furhatos.app.client.prompt.engineering.PromptEngineering
+import furhatos.app.client.prompt.engineering.loadPromptEngineeringFromConfig
 
-var llmClient: LLMClient = NoLLMClient()
-var furhatConfig: FurhatConfig = FurhatConfig(
-    address = "localhost",
-    interactions = FurhatInteractionsConfig(
-        maxNumberOfUsers = 2,
-        distanceToEngage = 1.0,
-        listenEndSil = 800
-    ))
+var llmClient: LLMClient? = null
+var monitoring: Monitoring? = null
+var config: Config? = null
+var promptEngineering: PromptEngineering? = null
 
 class ClientSkill : Skill() {
     override fun start() {
@@ -29,23 +25,27 @@ class ClientSkill : Skill() {
 }
 
 fun main(args: Array<String>) {
-    val configDir = System.getenv("CONFIG_DIR")
-
+    val llmClientCfgFile = System.getenv("LLM_CLIENT_CONFIG") ?: "/llm_client.yml"
+    val promptEngineeringCfgFile = System.getenv("PROMPT_ENGINEERING_CONFIG") ?: "/prompt_engineering/vanilla.yml"
+    val furhatRobotCfgFile = System.getenv("FURHAT_ROBOT_CONFIG") ?: "/furhat_robot.yml"
+    val monitoringCfgFile = System.getenv("MONITORING_CONFIG") ?: "/monitoring.yml"
 
     // Load configuration
-    val config = ConfigLoader.Builder().
-        addSource(PropertySource.resource(configDir + "/llm_client.yml")).
-        addSource(PropertySource.resource(configDir + "/prompt_engineering.yml")).
-        addSource(PropertySource.resource(configDir + "/furhat_robot.yml")).
+    config = ConfigLoader.Builder().
+        addSource(PropertySource.resource(llmClientCfgFile)).
+        addSource(PropertySource.resource(promptEngineeringCfgFile)).
+        addSource(PropertySource.resource(furhatRobotCfgFile)).
+        addSource(PropertySource.resource(monitoringCfgFile)).
         build().
         loadConfigOrThrow<Config>()
 
-    // Replace default furhat settings by settings from the configuration file
-    furhatConfig = config.furhat
     // Replace system property for the furhat robot address by the value from our own configuration
-    System.setProperty("furhatos.skills.brokeraddress", furhatConfig.address)
+    System.setProperty("furhatos.skills.brokeraddress", config?.furhat?.address!!)
+    promptEngineering = loadPromptEngineeringFromConfig(config?.promptEngineering!!)
     // Instantiate LLM Client
-    llmClient = loadLLMClientFromConfig(config)
+    llmClient = loadLLMClientFromConfig(config!!, promptEngineering!!)
+    // Initialize Monitoring
+    monitoring = Monitoring(config?.monitoring!!, promptEngineering!!)
 
     // Launch Furhat Skill
     LogisticMultiIntentClassifier.setAsDefault()

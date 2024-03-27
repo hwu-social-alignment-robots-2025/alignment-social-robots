@@ -1,6 +1,6 @@
 package furhatos.app.client.flow
 
-import furhatos.app.client.furhatConfig
+import furhatos.app.client.config
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
@@ -8,8 +8,8 @@ import furhatos.flow.kotlin.users
 val Init: State = state() {
     init {
         /** Set our default interaction parameters */
-        users.setSimpleEngagementPolicy(furhatConfig.interactions.distanceToEngage,
-            furhatConfig.interactions.maxNumberOfUsers)
+        users.setSimpleEngagementPolicy(config?.furhat?.interactions?.distanceToEngage!!,
+            config?.furhat?.interactions?.maxNumberOfUsers!!)
 
         /** start the interaction */
         goto(InitFlow)
