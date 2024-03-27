@@ -67,4 +67,4 @@ data class MonitoringConfig(val outputDir: String, val participant: ParticipantI
 
 // The subconfig that describe the participant information (it will just be used to merge with the gathered data from
 // the pre and post experiment forms)
-data class ParticipantInformation(val hwuId: String)
+data class ParticipantInformation(val linkId: String)

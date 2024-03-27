@@ -2,4 +2,4 @@
 monitoring:
   outputDir: "./output/"
   participant:
-    hwuId: ""
+    linkId: ""
