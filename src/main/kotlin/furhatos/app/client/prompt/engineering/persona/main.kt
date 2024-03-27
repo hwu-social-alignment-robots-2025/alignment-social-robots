@@ -25,10 +25,6 @@ class PersonaPromptEngineering(config: PersonaPromptEngineeringConfig) : PromptE
         }
     }
 
-    init {
-        println(rankings)
-    }
-
     override fun formatPrompt(): String {
         // Retrieve and format the dialog history into a single string
         val history = Furhat.dialogHistory.all.mapNotNull {
