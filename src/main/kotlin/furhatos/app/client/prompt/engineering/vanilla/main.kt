@@ -2,6 +2,7 @@ package furhatos.app.client.prompt.engineering.vanilla
 
 import furhatos.app.client.config.VanillaPromptEngineeringConfig
 import furhatos.app.client.prompt.engineering.PromptEngineering
+import furhatos.app.client.prompt.engineering.persona.Ranking
 import furhatos.flow.kotlin.DialogHistory
 import furhatos.flow.kotlin.Furhat
 
@@ -11,10 +12,9 @@ class VanillaPromptEngineering(config: VanillaPromptEngineeringConfig) : PromptE
     var rankings = config.context.rankings.map { ranking ->
         // Shuffle the list to ensure the ranking doesn't have any influence on the participants
         if (ranking.shuffled) {
-            ranking.elements.shuffled()
-            ranking
+            Ranking(ranking.theme, ranking.elements.shuffled())
         } else {
-            ranking
+            Ranking(ranking.theme, ranking.elements)
         }
     }
 
