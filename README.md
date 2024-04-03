@@ -1,5 +1,3 @@
-⚠️ This project is a part of an academical project and hence isn't open to contributions until it is finished
-
 # Alignment Social Robots
 
 <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*EnedQNSHpTl3pEdHqgyCOg.jpeg" width="400">
