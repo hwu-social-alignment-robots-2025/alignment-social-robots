@@ -26,7 +26,7 @@ class ClientSkill : Skill() {
 
 fun main(args: Array<String>) {
     val llmClientCfgFile = System.getenv("LLM_CLIENT_CONFIG") ?: "/llm_client.yml"
-    val promptEngineeringCfgFile = System.getenv("PROMPT_ENGINEERING_CONFIG") ?: "/prompt_engineering/vanilla.yml"
+    val promptEngineeringCfgFile = System.getenv("PROMPT_ENGINEERING_CONFIG") ?: "/prompt_engineering/control.yml"
     val furhatRobotCfgFile = System.getenv("FURHAT_ROBOT_CONFIG") ?: "/furhat_robot.yml"
     val monitoringCfgFile = System.getenv("MONITORING_CONFIG") ?: "/monitoring.yml"
 
